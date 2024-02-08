@@ -1,31 +1,24 @@
 <?php
-
 session_start();
 
 require 'database.php';
 
-
-if (!isset($_SESSION['user_id'])) {
-    echo "You are not logged in, please login. ";
-    echo "<a href='login.php'>Login here</a>";
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
+    header("Location: login.php");
     exit;
 }
 
-if ($_SESSION['role'] != 'admin') {
-    echo "You are not allowed to view this page, please login as admin";
-    exit;
-}
-
-//check method
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "You are not allowed to view this page";
     exit;
 }
 
-//check if all fields are filled in
-if (empty($_POST['firstname']) || empty($_POST['lastname']) || empty($_POST['email']) || empty($_POST['role']) || empty($_POST['address']) || empty($_POST['city']) || empty($_POST['backgroundColor']) || empty($_POST['font'])) {
-    echo "Please fill in all fields";
-    exit;
+$required_fields = ['firstname', 'lastname', 'email', 'role', 'address', 'city', 'backgroundColor', 'font', 'password'];
+foreach ($required_fields as $field) {
+    if (empty($_POST[$field])) {
+        echo "Please fill in all fields";
+        exit;
+    }
 }
 
 $email = $_POST['email'];
@@ -37,20 +30,23 @@ $address = $_POST['address'];
 $city = $_POST['city'];
 $is_active = 1;
 
-$sql = "INSERT INTO users (email, password, firstname, lastname, role, address, city, is_active) VALUES ('$email', '$password', '$firstname', '$lastname', '$role', '$address', '$city', '$is_active')";
-$result = mysqli_query($conn, $sql);
+$stmt = $conn->prepare("INSERT INTO users (email, password, firstname, lastname, role, address, city, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->execute([$email, $password, $firstname, $lastname, $role, $address, $city, $is_active]);
 
-if ($result) {
-    $user_id = mysqli_insert_id($conn);
+if ($stmt->rowCount() > 0) {
+    $user_id = $conn->lastInsertId();
+
     $backgroundColor = $_POST['backgroundColor'];
     $font = $_POST['font'];
-    $sql = "INSERT INTO user_settings (user_id, backgroundColor, font) VALUES ('$user_id', '$backgroundColor', '$font')";
-    $result = mysqli_query($conn, $sql);
-    if ($result) {
+    $stmt = $conn->prepare("INSERT INTO user_settings (user_id, backgroundColor, font) VALUES (?, ?, ?)");
+    $stmt->execute([$user_id, $backgroundColor, $font]);
+
+    if ($stmt->rowCount() > 0) {
         header("Location: users_index.php");
+        exit;
     } else {
         echo "Something went wrong";
     }
+} else {
+    echo "Something went wrong";
 }
-
-echo "Something went wrong";

@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -8,15 +7,18 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+
 if ($_SESSION['role'] != 'admin') {
     echo "You are not allowed to view this page, please login as admin";
     exit;
 }
 
 require 'header.php';
+
+
 require 'database.php';
 
-// Fetch data using PDO
+
 $sql = "SELECT COUNT(id) AS total FROM users";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -31,6 +33,7 @@ $sql = "SELECT COUNT(tool_id) AS total FROM tools";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $tools = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 ?>
 
@@ -47,15 +50,15 @@ $tools = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="container">
         <div class="card">
             <div class="card-group">
-                <h2>Totaal aantal gebruikers</h2>
+                <h2 for="">Totaal aantal gebruikers</h2>
                 <p><?php echo $users['total'] ?></p>
             </div>
             <div class="card-group">
-                <h2>Totaal aantal medewerkers</h2>
+                <h2 for="">Totaal aantal medewerkers</h2>
                 <p><?php echo $employees['total'] ?></p>
             </div>
             <div class="card-group">
-                <h2>Totaal aantal soorten gereedschap</h2>
+                <h2 for="">Totaal aantal soorten gereedschap</h2>
                 <p><?php echo $tools['total'] ?></p>
             </div>
         </div>

@@ -17,16 +17,13 @@ $sql = "SELECT * FROM users";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
-// set the resulting array to associative
-$tools = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+// Fetch users data
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 require 'header.php';
 ?>
 <main>
     <div class="container">
-
-
         <table>
             <thead>
                 <tr>

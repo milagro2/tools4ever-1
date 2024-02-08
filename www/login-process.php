@@ -24,14 +24,14 @@ if (isset($_POST['submit'])) {
 
                 if ($dbuser['password'] == $passwordForm) {
 
-
+                    session_start();
                     $_SESSION['user_id']    = $dbuser['id'];
                     $_SESSION['email']      = $dbuser['email'];
                     $_SESSION['firstname']  = $dbuser['firstname'];
                     $_SESSION['lastname']   = $dbuser['lastname'];
                     $_SESSION['role']       = $dbuser['role'];
 
-                    echo " You are logged in";
+                    // echo " You are logged in";
                     header("Location: dashboard.php");
                     exit;
                 } else {
