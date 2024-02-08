@@ -16,10 +16,21 @@ if ($_SESSION['role'] != 'admin') {
 require 'database.php';
 
 $sql = "SELECT * FROM tools";
-$result = mysqli_query($conn, $sql);
+$stmt = $conn->prepare($sql);
+    $stmt->execute();
 $tools = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 require 'header.php';
+
+// set the resulting array to associative
+
+$tools = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    
+    
+
+
+    ?>
 ?>
 <main>
     <table>

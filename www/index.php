@@ -7,21 +7,14 @@
 
 
 
-  
-
-// if (!$result) {
-//     die("Error: " . mysqli_error($conn));
-// }
-    // $tools = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
     require 'header.php';
 
     
-  $stmt = $conn->prepare($sql);
-  $stmt->execute();
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
 
-  // set the resulting array to associative
-  $tools = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // set the resulting array to associative
+    $tools = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     ?>
 

@@ -1,16 +1,18 @@
 <?php
-session_start();
+    session_start();
+    require 'database.php';
 
-require 'database.php';
+    $sql = "SELECT * FROM tools";
 
-if (isset($_GET['id'])) {
-    $tool_id = $_GET['id'];
-    $sql = "SELECT * FROM tools WHERE tool_id = $tool_id";
-    $result = mysqli_query($conn, $sql);
-    $tool = mysqli_fetch_assoc($result);
-}
-require 'header.php';
-?>
+    require 'header.php';
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    // set the resulting array to associative
+    $tools = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    ?>
 
 <main>
     <div class="container">
