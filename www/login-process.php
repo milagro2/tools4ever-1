@@ -13,8 +13,7 @@ if (isset($_POST['submit'])) {
             $stmt->bindParam(':email', $emailForm);
             $stmt->execute();
 
-            // set the resulting array to associative
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 
             //als de email bestaat dan is het resultaat groter dan 0
@@ -25,14 +24,14 @@ if (isset($_POST['submit'])) {
 
                 if ($dbuser['password'] == $passwordForm) {
 
-                    session_start();
+
                     $_SESSION['user_id']    = $dbuser['id'];
                     $_SESSION['email']      = $dbuser['email'];
                     $_SESSION['firstname']  = $dbuser['firstname'];
                     $_SESSION['lastname']   = $dbuser['lastname'];
                     $_SESSION['role']       = $dbuser['role'];
 
-                    // echo "You are logged in";
+                    echo " You are logged in";
                     header("Location: dashboard.php");
                     exit;
                 } else {

@@ -5,8 +5,6 @@
     $sql = "SELECT * FROM tools";
     // $result = mysqli_query($conn, $sql);
 
-
-
     require 'header.php';
 
     

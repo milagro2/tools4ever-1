@@ -14,8 +14,12 @@ if ($_SESSION['role'] != 'admin') {
 require 'database.php';
 
 $sql = "SELECT * FROM users";
-$result = mysqli_query($conn, $sql);
-$users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+
+// set the resulting array to associative
+$tools = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 require 'header.php';
 ?>
