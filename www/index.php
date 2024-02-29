@@ -1,5 +1,5 @@
     <?php
-    session_start();
+
     require 'database.php';
 
     $sql = "SELECT * FROM tools";
@@ -7,7 +7,7 @@
 
     require 'header.php';
 
-    
+
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
