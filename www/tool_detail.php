@@ -1,18 +1,18 @@
 <?php
     session_start();
     require 'database.php';
-
-    $sql = "SELECT * FROM tools";
-
     require 'header.php';
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
 
-    // set the resulting array to associative
-    $tools = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if (isset($_GET['id']) && !empty($_GET['id'])) {
+        $tool_id = $_GET['id'];
 
-    ?>
+        $sql = "SELECT * FROM tools WHERE tool_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$tool_id]);
+
+        $tool = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+?>
 
 <main>
     <div class="container">
@@ -28,11 +28,10 @@
                         <p><?php echo $tool['tool_category'] ?></p>
                         <p><?php echo number_format($tool['tool_price'] / 100, 2, ',', '') ?></p>
                         <p>
-                            <a href="add_to_cart.php?id=<?php echo $tool['tool_id']; ?>" class="btn">Bestel</a>
+                            <!-- <a href="add_to_cart.php?id=<?php echo $tool['tool_id']; ?>" class="btn">Bestel</a> -->
                         </p>
                     </div>
                 </div>
-
             </div>
         <?php else : ?>
             <p>Tool not found.</p>
