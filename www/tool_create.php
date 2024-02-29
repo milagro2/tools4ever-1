@@ -19,7 +19,7 @@ require 'header.php';
 <main>
     <h1>Nieuw Gereedschap</h1>
     <div class="container">
-        <form action="tool_create_process.php" method="post">
+        <form action="tool_create_process.php" method="post" enctype="multipart/form-data">
             <div>
                 <label for="name">Naam:</label>
                 <input type="text" id="name" name="name">
@@ -38,7 +38,7 @@ require 'header.php';
             </div>
             <div>
                 <label for="image">Afbeelding:</label>
-                <input type="text" id="image" name="image">
+                <input type="file" id="image" name="image">
             </div>
             <button type="submit" class="btn btn-success">Toevoegen</button>
         </form>

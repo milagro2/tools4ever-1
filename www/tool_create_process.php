@@ -23,16 +23,25 @@ $name = $_POST['name'];
 $category = $_POST['category'];
 $price = $_POST['price'];
 $brand = $_POST['brand'];
-$image = $_POST['image'];
-
-$sql = "INSERT INTO tools (tool_name, tool_category, tool_price, tool_brand, tool_image) VALUES (?, ?, ?, ?, ?)";
-$stmt = $conn->prepare($sql);
-$stmt->execute([$name, $category, $price, $brand, $image]);
 
 
-if ($stmt->rowCount() > 0) {
-    header("Location: tool_index.php");
-    exit;
+$image = $_FILES['image']['name'];
+$image_temp = $_FILES['image']['tmp_name'];
+$image_folder = "images/";
+
+
+if (move_uploaded_file($image_temp, $image_folder . $image)) {
+    $sql = "INSERT INTO tools (tool_name, tool_category, tool_price, tool_brand, tool_image) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$name, $category, $price, $brand, $image]);
+
+    if ($stmt->rowCount() > 0) {
+        header("Location: tool_index.php");
+        exit;
+    } else {
+        echo "Failed to insert tool into database";
+    }
+} else {
+    echo "Failed to upload image";
 }
-
-echo "Something went wrong";
+?>
