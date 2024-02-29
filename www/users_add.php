@@ -44,15 +44,8 @@ require 'header.php';
                 <label for="city">Stad:</label>
                 <input type="text" id="city" name="city">
             </div>
-            <div>
-                <label for="backgroundColor">kleur:</label>
-                <input type="color" id="backgroundColor" name="backgroundColor">
-            </div>
-            <div>
-                <label for="city">Lettertype:</label>
-                <select id='select' onChange="return fontChange();" name="font">
-                </select>
-            </div>
+
+
             <div>
                 <label for="role">Rol:</label>
                 <select id="role" name="role">

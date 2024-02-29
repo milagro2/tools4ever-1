@@ -12,26 +12,17 @@ if ($_SESSION['role'] != 'admin') {
     exit;
 }
 
-
 require 'database.php';
 
+// Prepare and execute the SQL query
 $sql = "SELECT * FROM tools";
 $stmt = $conn->prepare($sql);
-    $stmt->execute();
-$tools = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-require 'header.php';
-
-// set the resulting array to associative
-
+$stmt->execute();
 $tools = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    
-    
-
-
-    ?>
+require 'header.php';
 ?>
+
 <main>
     <table>
         <thead>
@@ -53,11 +44,13 @@ $tools = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td>
                         <a href="tool_detail.php?id=<?php echo $tool['tool_id'] ?>">Bekijk</a>
                         <a href="tool_edit.php?id=<?php echo $tool['tool_id'] ?>">Wijzig</a>
-                        <a href="tool_delete.php?id=<?php echo $tool['tool_id'] ?>">Verwijder</a>
+                        <a href="tool_delete.php?id=<?php echo $tool['tool_id'] ?>" onclick="return confirm
+                        ('Weet je zeker dat je deze tool wil Verwijderen?')">Verwijder</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </main>
+
 <?php require 'footer.php' ?>

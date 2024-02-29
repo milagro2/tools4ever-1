@@ -1,30 +1,18 @@
 <?php
+    session_start();
+    require 'database.php';
 
-session_start();
+    $sql = "SELECT * FROM users";
 
-require 'database.php';
+    require 'header.php';
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
 
-if (!isset($_SESSION['user_id'])) {
-    echo "You are not logged in, please login. ";
-    echo "<a href='login.php'>Login here</a>";
-    exit;
-}
+    // set the resulting array to associative
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if ($_SESSION['role'] != 'admin') {
-    echo "You are not allowed to view this page, please login as admin";
-    exit;
-}
-
-$id = $_GET['id'];
-
-$sql = "SELECT * FROM users LEFT JOIN user_settings ON user_settings.user_id = users.id WHERE users.id =  $id";
-$result = mysqli_query($conn, $sql);
-$user = mysqli_fetch_assoc($result);
-
-
-require 'header.php';
-
-?>
+    ?>
 
 <main>
     <div class="container">
