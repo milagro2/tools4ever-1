@@ -13,6 +13,12 @@ if ($_SESSION['role'] != 'admin') {
 }
 
 require 'database.php';
+
+// $sql = "SELECT * from tools";
+// $stmt = $conn->prepare($sql);
+// $stmt->execute();
+// $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 require 'header.php';
 ?>
 
@@ -27,6 +33,8 @@ require 'header.php';
             <div>
                 <label for="category">Categorie:</label>
                 <input type="text" id="category" name="category">
+
+
             </div>
             <div>
                 <label for="price">Prijs:</label>
@@ -45,3 +53,10 @@ require 'header.php';
     </div>
 </main>
 <?php require 'footer.php' ?>
+
+
+<!-- <select name="category" id="">
+<?php foreach ($categories as $category) ?>
+                    <option value="<?php $category('category_id') ?>"><?php echo $category('name') ?></option>
+
+                </select> -->
