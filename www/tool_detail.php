@@ -1,17 +1,17 @@
 <?php
-    session_start();
-    require 'database.php';
-    require 'header.php';
+session_start();
+require 'database.php';
+require 'header.php';
 
-    if (isset($_GET['id']) && !empty($_GET['id'])) {
-        $tool_id = $_GET['id'];
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    $tool_id = $_GET['id'];
 
-        $sql = "SELECT * FROM tools WHERE tool_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$tool_id]);
+    $sql = "SELECT * FROM tools WHERE tool_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$tool_id]);
 
-        $tool = $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+    $tool = $stmt->fetch(PDO::FETCH_ASSOC);
+}
 ?>
 
 <main>
@@ -26,7 +26,7 @@
                         <h3><?php echo $tool['tool_name'] ?></h3>
                         <p><?php echo $tool['tool_brand'] ?></p>
                         <p><?php echo $tool['tool_category'] ?></p>
-                        <p><?php echo number_format($tool['tool_price'] / 100, 2, ',', '') ?></p>
+                        <p><?php echo number_format($tool['tool_price'] / 1, 2, ',', '') ?></p>
                         <p>
                             <!-- <a href="add_to_cart.php?id=<?php echo $tool['tool_id']; ?>" class="btn">Bestel</a> -->
                         </p>

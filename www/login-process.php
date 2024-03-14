@@ -6,14 +6,12 @@ if (isset($_POST['submit'])) {
             $emailForm = $_POST['email'];
             $passwordForm = $_POST['password'];
 
-            require 'database.php';
 
+            require 'database.php';
             
             $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email ");
             $stmt->bindParam(':email', $emailForm);
             $stmt->execute();
-
-
 
 
             //als de email bestaat dan is het resultaat groter dan 0
@@ -22,8 +20,9 @@ if (isset($_POST['submit'])) {
                 //resultaat gevonden? Dan maken we een user-array $dbuser
                 $dbuser = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                if ($dbuser['password'] == $passwordForm) {
-
+                if (password_verify($passwordForm, $dbuser['password'])) {
+                // if ($dbuser['password'] == $passwordForm) {
+                
                     session_start();
                     $_SESSION['user_id']    = $dbuser['id'];
                     $_SESSION['email']      = $dbuser['email'];
